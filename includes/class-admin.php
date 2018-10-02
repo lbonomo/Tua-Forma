@@ -2,11 +2,11 @@
 
 class Tua_Forma_Admin {
 
+
     public function __construct() {
         add_action('admin_init', array($this, 'register_setting'));
         add_action('admin_menu', array($this, 'option_page'));
     }
-
 
     # Registro el Muenu
     function option_page() {
@@ -15,7 +15,7 @@ class Tua_Forma_Admin {
             'Tua Forma', # $menu_title
             'manage_options',
             'tua-forma-settings',
-            array( 'Tua_Forma_Admin', 'options_page_display' ), # $function,
+            array( 'Tua_Forma_Admin', 'options_page_display'), # $function,
             'dashicons-forms', # $icon_url - Ver en https://developer.wordpress.org/resource/dashicons/
             15 # $position
         );
@@ -32,6 +32,44 @@ class Tua_Forma_Admin {
 
         // Registro en la tabla y agrego el campo a la Seccion
 
+        // TODO - Reply-To
+        register_setting(
+            'tua-forma-settings',  # $option_group,
+            'tua-forma-smtp-reply-to', # $option_name,
+            null                   # $sanitize_callback
+        );
+        add_settings_field(
+            'tua-forma-smtp-reply-to',            # $id
+            'Responder a',                           # $title
+            array($this,'text_callback'), # $callback
+            'tua-forma-settings',                 # $page
+            'tua-forma-options-section',          # $section
+            [
+                'label_for' => 'tua-forma-smtp-reply-to',
+                'class' => 'regular-text',
+                'description' => null,
+            ]
+        );        
+        
+        // TODO - From
+        register_setting(
+            'tua-forma-settings',  # $option_group,
+            'tua-forma-smtp-from', # $option_name,
+            null                   # $sanitize_callback
+        );
+        add_settings_field(
+            'tua-forma-smtp-from',                # $id
+            'Enviar a',                           # $title
+            array($this,'text_callback'), # $callback
+            'tua-forma-settings',                 # $page
+            'tua-forma-options-section',          # $section
+            [
+                'label_for' => 'tua-forma-smtp-from',
+                'class' => 'regular-text',
+                'description' => null,
+            ]
+        );        
+
         /**** SMTP USERNAME  ****/
         register_setting(
             'tua-forma-settings',  # $option_group,
@@ -47,6 +85,7 @@ class Tua_Forma_Admin {
             [
                 'label_for' => 'tua-forma-smtp-user',
                 'class' => 'regular-text',
+                'description' => null,
             ]
         );
 
@@ -75,7 +114,7 @@ class Tua_Forma_Admin {
             'tua-forma-options-section',
             [
                 'label_for' => 'tua-forma-smtp-server',
-                'description' => "Ej: Gmail = smtp.gmail.com",
+                'description' => "Ej: Gmail = smtp.gmail.com. https://support.google.com/a/answer/176600?hl=en",
                 'class' => 'regular-text',
             ]
         );
@@ -117,27 +156,22 @@ class Tua_Forma_Admin {
             ]
         );
 
-        /**** SMTP TO  ****/
-        register_setting('tua-forma-settings', 'tua-forma-smtp-to');
+        /**** SMTP Recipients  ****/
+        register_setting('tua-forma-settings', 'tua-forma-smtp-recipients');
         add_settings_field(
-            'tua-forma-smtp-to',
-            'To',
+            'tua-forma-smtp-recipients',
+            'Destinatarios',
             array($this,'text_callback'),
             'tua-forma-settings',
             'tua-forma-options-section',
             [
-                'label_for' => 'tua-forma-smtp-to',
-                'description' => null,
+                'label_for' => 'tua-forma-smtp-recipients',
+                'description' => 'Uno o más destinatario, separado por coma',
                 'class' => 'regular-text',
             ]
         );
 
         /**** SMTP AUTHENTICATION ****/
-        // Autenticación
-        // description
-        // Deja esta opción en Sí. Sólo una pequeña parte de los servicios SMTP requerirán que se desactive la Autenticación.
-        // <input type="radio" value="1" name="mta[authentication]" checked="checked">
-        // <input type="radio" value="-1" name="mta[authentication]">
         register_setting('tua-forma-settings', 'tua-forma-smtp-authentication');
         add_settings_field(
             'tua-forma-smtp-authentication',
@@ -155,9 +189,87 @@ class Tua_Forma_Admin {
                 ],
             ]
         );
+
+        /**** Mensaje de error ****/
+        register_setting('tua-forma-settings', 'tua-forma-error-message');
+        add_settings_field(
+            'tua-forma-error-message',
+            'Mensaje de error',
+            array($this,'text_callback'),
+            'tua-forma-settings',
+            'tua-forma-options-section',
+            [
+                'label_for' => 'tua-forma-error-message',
+                'description' => null,
+                'class' => 'regular-text',
+            ]
+        );
+
+        /**** Mensaje de exito ****/
+        register_setting('tua-forma-settings', 'tua-forma-successful-message');
+        add_settings_field(
+            'tua-forma-successful-message',
+            'Mensaje de exito',
+            array($this,'text_callback'),
+            'tua-forma-settings',
+            'tua-forma-options-section',
+            [
+                'label_for' => 'tua-forma-successful-message',
+                'description' => null,
+                'class' => 'regular-text',
+            ]
+        );
+
+        /**** Datos adicionales ****/
+        register_setting('tua-forma-settings', 'tua-forma-metadata');
+        add_settings_field(
+            'tua-forma-metadata',
+            'Incluir datos adicionales',
+            array($this,'checkbox_callback'),
+            'tua-forma-settings',
+            'tua-forma-options-section',
+            [
+                'label_for' => 'tua-forma-metadata',
+                'description' => "Incluir datos adicionales en el email",
+                'class' => '',
+            ]
+        );
+
+        /**** Asunto del mail ****/
+        register_setting('tua-forma-settings', 'tua-forma-subject');
+        add_settings_field(
+            'tua-forma-subject',
+            'Asunto del mail',
+            array($this,'text_callback'),
+            'tua-forma-settings',
+            'tua-forma-options-section',
+            [
+                'label_for' => 'tua-forma-subject',
+                'description' => null,
+                'class' => 'regular-text',
+            ]
+        );        
+
     }
 
     function section_callback() { }
+
+    function checkbox_callback($args) {
+        $value = get_option($args['label_for']);
+        $value = isset($value) ? esc_attr($value) : '0'; 
+        $name = $args['label_for'];
+        $description = $args['description'];
+        $class = $args['class'];
+        $html = "<label for='$name'>";
+        if ($value === '1' ) {
+            $html .= "<input type='checkbox' name='$name' id='$value' value='1' class='$class' checked='checked'>";
+        } else { 
+            $html .= "<input type='checkbox' name='$name' id='$value' value='1' class='$class'>";
+        }
+        if ($description !== null ) { $html .= $description; }
+        $html .= "</label>";
+        echo $html;
+    }
 
     function text_callback($args) {
         $value = get_option($args['label_for']);
@@ -235,8 +347,19 @@ class Tua_Forma_Admin {
     }
 
     static function options_page_display() {
+   
+
         // require_once plugin_dir_path(__File__).'../templates/admin-options-page.php';
         if (current_user_can('manage_options')) {
+
+            /**** Verifico si esta preciente la clase Mail ****/
+            if ( get_option('tua-forma-smtp-enabled') != 'true') { 
+                echo '<div class="error settings-error notice is-dismissible">
+                <p><strong>Es necesario tener instalada la libreria NET SMTP</strong> (sudo apt install php-mail php-net-smtp php-auth-sasl php-net-socket)</strong></p>
+                <button type="button" class="notice-dismiss">
+                <span class="screen-reader-text">Descartar este aviso.</span></button></div>
+                ';
+            }           
 
             /**** UPDATED ****/
             if ( isset ( $_GET['settings-updated'] ) ) {
@@ -262,8 +385,5 @@ class Tua_Forma_Admin {
             // <a id="tua-forma-test" class="button-secondary">Enviar un correo electrónico de prueba</a>
             // 
         }
-
     }
-
-
 }
