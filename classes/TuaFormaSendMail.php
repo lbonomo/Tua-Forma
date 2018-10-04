@@ -13,7 +13,7 @@ class TuaFormaSendMail {
 
     }
 
-    public function send() {
+    public function send($body) {
 
         if ( get_option('tua-forma-smtp-enabled') === 'true') { 
             $smtp_enabled = true;
@@ -34,7 +34,7 @@ class TuaFormaSendMail {
         $recipients = explode(',',get_option('tua-forma-smtp-recipients'));
         $subject = get_option('tua-forma-subject');
 
-        $body = 'Solo una prueba';
+        $body = $body;
 
 
         //Server settings

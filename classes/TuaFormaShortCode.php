@@ -1,6 +1,8 @@
 <?php
 
-class Tua_Forma_ShortCode {
+// namespace classes;
+
+class TuaFormaShortCode {
 
     function __construct() {
         add_shortcode('tua-forma',array($this,'add_shortcode'));
@@ -19,12 +21,13 @@ class Tua_Forma_ShortCode {
             $body = "<div class='tua-forma-successful-message'>$successful_message</div>";
         } elseif ( isset($_GET['tua-forma-error-message'] ) ) {
             $obj_id = get_queried_object_id();
-            $current_url = get_permalink( $obj_id );
+            $current_url = get_permalink( $obj_id );            
             $body = "<div class='tua-forma-message'>";
+            $body .= "<script> function goBack() { window.history.back(); } </script>";
             $body .= "<div class='tua-forma-error-message'>$error_message</div>";
-            $body .= "<a class='tua-forma-link' href='$current_url'>Volver</a>";
+            $body .= "<a class='tua-forma-link' onclick='goBack()' href=''>Volver</a>";
             $body .= "</div>";
-        } else {
+        } else {            
             $body = "<form accept-charset='UTF-8' action='$action' autocomplete='off' enctype='multipart/form-data' method='POST'>";
             $body .= "<input type='hidden' id='rand' name='rand' value='$nonce_rand'>";
             $body .= wp_nonce_field( 'tua-forma-nonce-'.$nonce_rand );

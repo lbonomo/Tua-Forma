@@ -1,7 +1,8 @@
 <?php
 
-class Tua_Forma_Admin {
+// namespace classes;
 
+class TuaFormaAdmin {
 
     public function __construct() {
         add_action('admin_init', array($this, 'register_setting'));
@@ -15,7 +16,7 @@ class Tua_Forma_Admin {
             'Tua Forma', # $menu_title
             'manage_options',
             'tua-forma-settings',
-            array( 'Tua_Forma_Admin', 'options_page_display'), # $function,
+            array( 'TuaFormaAdmin', 'options_page_display'), # $function,
             'dashicons-forms', # $icon_url - Ver en https://developer.wordpress.org/resource/dashicons/
             15 # $position
         );
