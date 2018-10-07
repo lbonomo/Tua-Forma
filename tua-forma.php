@@ -2,7 +2,7 @@
 /**
 * Plugin Name:     Tua Forma
 * Plugin URI:      https://lucasbonomo.com/wordpress/plugins/
-* Description:     
+* Description:     Este shortcode solo se encarga de generar las etiquetas (<form> y </form>) y campos (nonce) necesarios para enviar el contenido de un formulario por mail.
 * Author:          Lucas Bonomo
 * Author URI:      https://lucasbonomo.com
 * Text Domain:     tua-forma
@@ -17,17 +17,17 @@ require_once "classes/TuaForma.php";
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**** Activator ****/
-register_activation_hook( __FILE__,  array( 'TuaForma', 'activate' ) );
+register_activation_hook( __FILE__,  array( 'TuaForma', 'tua_forma_activate' ) );
 
 /**** Deactivator ****/
-register_deactivation_hook( __FILE__,  array( 'TuaForma', 'deactivation' ) );
+register_deactivation_hook( __FILE__,  array( 'TuaForma', 'tua_forma_deactivation' ) );
 
 /**** Uninstall ****/
-register_uninstall_hook( __FILE__,  array( 'TuaForma', 'uninstall' ) );
+register_uninstall_hook( __FILE__,  array( 'TuaForma', 'tua_forma_uninstall' ) );
 
 
-function run_tua_forma() {
+function tua_forma_run() {
     $plugin = new TuaForma();
 }
 
-run_tua_forma();
+tua_forma_run();

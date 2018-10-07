@@ -1,10 +1,5 @@
 <?php
 
-// namespace classes;
-
-// use classes\TuaFormaAdmin;
-// use classes\TuaFormaShortCode;
-
 require_once 'TuaFormaAdmin.php';
 require_once 'TuaFormaShortCode.php';
 
@@ -15,14 +10,13 @@ class TuaForma {
         $admin_page = new TuaFormaShortCode();
     }
 
-    static function activate() {
-        add_option('tua-forma-smtp-enabled','false');
+    static function tua_forma_activate() {
     }
 
-    static function deactivation() {
+    static function tua_forma_deactivation() {
     }
 
-    function uninstall() {
+    function tua_forma_uninstall() {
     }
 
 }

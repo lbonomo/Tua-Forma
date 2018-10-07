@@ -5,33 +5,52 @@
 class TuaFormaAdmin {
 
     public function __construct() {
-        add_action('admin_init', array($this, 'register_setting'));
-        add_action('admin_menu', array($this, 'option_page'));
+        add_action('admin_init', array($this, 'tua_forma_register_setting'));
+        add_action('admin_menu', array($this, 'tua_forma_option_page'));
     }
 
     # Registro el Muenu
-    function option_page() {
+    function tua_forma_option_page() {
         add_menu_page(
             'Tua Forma config',
             'Tua Forma', # $menu_title
             'manage_options',
             'tua-forma-settings',
-            array( 'TuaFormaAdmin', 'options_page_display'), # $function,
+            array( 'TuaFormaAdmin', 'tua_forma_options_page_display'), # $function,
             'dashicons-forms', # $icon_url - Ver en https://developer.wordpress.org/resource/dashicons/
             15 # $position
         );
 
     }
 
-    function register_setting() {
+    function tua_forma_register_setting() {
         // Section
         add_settings_section(
             'tua-forma-options-section',
             'SMTP options',
-            array($this, 'section_callback'),
+            array($this, 'tua_forma_section_callback'),
             'tua-forma-settings');
 
         // Registro en la tabla y agrego el campo a la Seccion
+
+        // TODO - From
+        register_setting(
+            'tua-forma-settings',  # $option_group,
+            'tua-forma-smtp-from', # $option_name,
+            null                   # $sanitize_callback
+        );
+        add_settings_field(
+            'tua-forma-smtp-from',                  # $id
+            'De:',                                  # $title
+            array($this,'tua_forma_text_callback'), # $callback
+            'tua-forma-settings',                   # $page
+            'tua-forma-options-section',           # $section
+            [
+                'label_for' => 'tua-forma-smtp-from',
+                'class' => 'regular-text',
+                'description' => null,
+            ]
+        );                
 
         // TODO - Reply-To
         register_setting(
@@ -41,8 +60,8 @@ class TuaFormaAdmin {
         );
         add_settings_field(
             'tua-forma-smtp-reply-to',            # $id
-            'Responder a',                           # $title
-            array($this,'text_callback'), # $callback
+            'Responder a:',                         # $title
+            array($this,'tua_forma_text_callback'), # $callback
             'tua-forma-settings',                 # $page
             'tua-forma-options-section',          # $section
             [
@@ -52,117 +71,13 @@ class TuaFormaAdmin {
             ]
         );        
         
-        // TODO - From
-        register_setting(
-            'tua-forma-settings',  # $option_group,
-            'tua-forma-smtp-from', # $option_name,
-            null                   # $sanitize_callback
-        );
-        add_settings_field(
-            'tua-forma-smtp-from',                # $id
-            'Enviar a',                           # $title
-            array($this,'text_callback'), # $callback
-            'tua-forma-settings',                 # $page
-            'tua-forma-options-section',          # $section
-            [
-                'label_for' => 'tua-forma-smtp-from',
-                'class' => 'regular-text',
-                'description' => null,
-            ]
-        );        
-
-        /**** SMTP USERNAME  ****/
-        register_setting(
-            'tua-forma-settings',  # $option_group,
-            'tua-forma-smtp-user', # $option_name,
-            null                   # $sanitize_callback
-        );
-        add_settings_field(
-            'tua-forma-smtp-user',                # $id
-            'Username',                           # $title
-            array($this,'text_callback'), # $callback
-            'tua-forma-settings',                 # $page
-            'tua-forma-options-section',          # $section
-            [
-                'label_for' => 'tua-forma-smtp-user',
-                'class' => 'regular-text',
-                'description' => null,
-            ]
-        );
-
-        /**** SMTP PASSWORD  ****/
-        register_setting('tua-forma-settings', 'tua-forma-smtp-pass');
-        add_settings_field(
-            'tua-forma-smtp-pass',            # $id
-            'Password',                       # $title
-            array($this,'password_callback'), # $callback
-            'tua-forma-settings',             # $page
-            'tua-forma-options-section',      # $section
-            [                                 # $args
-                'label_for' => 'tua-forma-smtp-pass',
-                'description' => null,
-                'class' => 'regular-text',
-            ]
-        );
-
-        /**** SMTP SERVER  ****/
-        register_setting('tua-forma-settings', 'tua-forma-smtp-server');
-        add_settings_field(
-            'tua-forma-smtp-server',
-            'Server',
-            array($this,'text_callback'),
-            'tua-forma-settings',
-            'tua-forma-options-section',
-            [
-                'label_for' => 'tua-forma-smtp-server',
-                'description' => "Ej: Gmail = smtp.gmail.com. https://support.google.com/a/answer/176600?hl=en",
-                'class' => 'regular-text',
-            ]
-        );
-
-        /**** SMTP PORT  ****/
-        register_setting('tua-forma-settings' ,'tua-forma-smtp-port');
-        add_settings_field(
-            'tua-forma-smtp-port',
-            'Port',
-            array($this,'number_callback'),
-            'tua-forma-settings',
-            'tua-forma-options-section',
-            [
-                'label_for' => 'tua-forma-smtp-port',
-                'description' => 'Ej: Gmail = 587',
-                'class' => 'regular-text',
-                'max' => '65535',
-                'min' => '1',
-            ]
-        );
-
-        /**** SMTP PROTOCOLO  ****/
-        register_setting('tua-forma-settings', 'tua-forma-smtp-protocol');
-        add_settings_field(
-            'tua-forma-smtp-protocol',
-            'Protocol',
-            array($this,'selects_callback'),
-            'tua-forma-settings',
-            'tua-forma-options-section',
-            [
-                'label_for' => 'tua-forma-smtp-protocol',
-                'description' => 'Ej: Gmail = TLS',
-                'class' => 'regular-text',
-                'options' => [
-                    'no' => 'No',
-                    'ssl' => 'SSL',
-                    'tls' => 'TLS'
-                ]
-            ]
-        );
 
         /**** SMTP Recipients  ****/
         register_setting('tua-forma-settings', 'tua-forma-smtp-recipients');
         add_settings_field(
             'tua-forma-smtp-recipients',
-            'Destinatarios',
-            array($this,'text_callback'),
+            'Destinatarios:',
+            array($this,'tua_forma_text_callback'),
             'tua-forma-settings',
             'tua-forma-options-section',
             [
@@ -172,31 +87,13 @@ class TuaFormaAdmin {
             ]
         );
 
-        /**** SMTP AUTHENTICATION ****/
-        register_setting('tua-forma-settings', 'tua-forma-smtp-authentication');
-        add_settings_field(
-            'tua-forma-smtp-authentication',
-            'Autenticación',
-            array($this,'radio_callback'),
-            'tua-forma-settings',
-            'tua-forma-options-section',
-            [
-                'label_for' => 'tua-forma-smtp-authentication',
-                'description' => 'Deja esta opción en Sí. Sólo una pequeña parte de los servicios SMTP requerirán que se desactive la Autenticación.',
-                'class' => '',
-                'radios' => [
-                    '1' => 'Si',
-                    '0' => 'No',
-                ],
-            ]
-        );
 
         /**** Mensaje de error ****/
         register_setting('tua-forma-settings', 'tua-forma-error-message');
         add_settings_field(
             'tua-forma-error-message',
-            'Mensaje de error',
-            array($this,'text_callback'),
+            'Mensaje de error:',
+            array($this,'tua_forma_text_callback'),
             'tua-forma-settings',
             'tua-forma-options-section',
             [
@@ -210,8 +107,8 @@ class TuaFormaAdmin {
         register_setting('tua-forma-settings', 'tua-forma-successful-message');
         add_settings_field(
             'tua-forma-successful-message',
-            'Mensaje de exito',
-            array($this,'text_callback'),
+            'Mensaje de exito:',
+            array($this,'tua_forma_text_callback'),
             'tua-forma-settings',
             'tua-forma-options-section',
             [
@@ -225,8 +122,8 @@ class TuaFormaAdmin {
         register_setting('tua-forma-settings', 'tua-forma-metadata');
         add_settings_field(
             'tua-forma-metadata',
-            'Incluir datos adicionales',
-            array($this,'checkbox_callback'),
+            'Incluir datos adicionales:',
+            array($this,'tua_forma_checkbox_callback'),
             'tua-forma-settings',
             'tua-forma-options-section',
             [
@@ -240,8 +137,8 @@ class TuaFormaAdmin {
         register_setting('tua-forma-settings', 'tua-forma-subject');
         add_settings_field(
             'tua-forma-subject',
-            'Asunto del mail',
-            array($this,'text_callback'),
+            'Asunto del mail:',
+            array($this,'tua_forma_text_callback'),
             'tua-forma-settings',
             'tua-forma-options-section',
             [
@@ -253,9 +150,9 @@ class TuaFormaAdmin {
 
     }
 
-    function section_callback() { }
+    function tua_forma_section_callback() { }
 
-    function checkbox_callback($args) {
+    function tua_forma_checkbox_callback($args) {
         $value = get_option($args['label_for']);
         $value = isset($value) ? esc_attr($value) : '0'; 
         $name = $args['label_for'];
@@ -272,7 +169,7 @@ class TuaFormaAdmin {
         echo $html;
     }
 
-    function text_callback($args) {
+    function tua_forma_text_callback($args) {
         $value = get_option($args['label_for']);
         $value = isset($value) ? esc_attr($value) : '';
         $name = $args['label_for'];
@@ -283,7 +180,7 @@ class TuaFormaAdmin {
         echo $html;
     }
     
-    function password_callback($args) {
+    function tua_forma_password_callback($args) {
         $value = get_option($args['label_for']);
         $value = isset($value) ? esc_attr($value) : '';
         $name = $args['label_for'];
@@ -294,7 +191,7 @@ class TuaFormaAdmin {
         echo $html;
     }
 
-    function number_callback($args) {
+    function tua_forma_number_callback($args) {
         $value = get_option($args['label_for']);
         $value = isset($value) ? esc_attr($value) : '';
         $name = $args['label_for'];
@@ -307,7 +204,7 @@ class TuaFormaAdmin {
         echo $html;
     }
 
-    function selects_callback($args) {
+    function tua_forma_selects_callback($args) {
         $value = get_option($args['label_for']);
         $value = isset($value) ? esc_attr($value) : '';
         $description = $args['description'];
@@ -327,7 +224,7 @@ class TuaFormaAdmin {
         echo $html;
     }
 
-    function radio_callback($args) {
+    function tua_forma_radio_callback($args) {
         $value = get_option($args['label_for']);
         $value = isset($value) ? (int)esc_attr($value) : '';
         $description = $args['description'];
@@ -347,7 +244,7 @@ class TuaFormaAdmin {
         echo $html;
     }
 
-    static function options_page_display() {
+    static function tua_forma_options_page_display() {
    
 
         // require_once plugin_dir_path(__File__).'../templates/admin-options-page.php';

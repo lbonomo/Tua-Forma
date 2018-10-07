@@ -1,6 +1,5 @@
 <?php
 // https://gist.github.com/karlazz/4638931
-use classes\TuaFormaSendMail;
 use classes\TuaFormaBody;
 
 if ( $_POST ) {
@@ -19,8 +18,13 @@ if ( $_POST ) {
         error_log($_SERVER['HTTP_REFERER']);
 
         # compongo y envio el mail
-        $tua_mail = new TuaFormaSendMail();
 
+        $headers = array('Content-Type: text/html; charset=UTF-8');        
+        $from = get_option('tua-forma-smtp-from');
+        $reply_to = get_option('tua-forma-smtp-reply-to');
+        $recipients = explode(',',get_option('tua-forma-smtp-recipients'));
+        $subject = get_option('tua-forma-subject');
+       
         $body = new TuaFormaBody();
         $data = $_POST;
         # Campos que no se envian
@@ -28,14 +32,20 @@ if ( $_POST ) {
         foreach ($hidden as $h) {
             unset($data[$h]);
         }
+         
+        $wp_mail_return = wp_mail( $recipients, $subject, $body->tua_forma_body($data), $headers );
 
-        if ( $tua_mail->send($body->body($data)) ) {
-            header('Location: '.$reference.'?gutua-forma-successful-message');
+        if ( $wp_mail_return ) {
+            // wp_safe_redirect()
+            $next = add_query_arg('tua-forma-message','successful',$reference);
+            header('Location: '.$next);
         } else {
-            header('Location: '.$reference.'?tua-forma-error-message');
+            $next = add_query_arg('tua-forma-message','error',$reference);
+            header('Location: '.$next);
         }
     } else {
-        header('Location: '.$reference.'?tua-forma-error-message');
+        $next = add_query_arg('tua-forma-message','error',$reference);
+        header('Location: '.$next);
     }
 }
 
