@@ -1,8 +1,5 @@
 <?php
 
-namespace classes;
-
-
 class TuaFormaBody {
 
     public function __construct() {
