@@ -27,49 +27,49 @@ class TuaFormaAdmin {
         // Section
         add_settings_section(
             'tua-forma-options-section',
-            'SMTP options',
+            'Opciones de Tua Forma',
             array($this, 'tua_forma_section_callback'),
             'tua-forma-settings');
 
         // Registro en la tabla y agrego el campo a la Seccion
 
         // TODO - From
-        register_setting(
-            'tua-forma-settings',  # $option_group,
-            'tua-forma-smtp-from', # $option_name,
-            null                   # $sanitize_callback
-        );
-        add_settings_field(
-            'tua-forma-smtp-from',                  # $id
-            'De:',                                  # $title
-            array($this,'tua_forma_text_callback'), # $callback
-            'tua-forma-settings',                   # $page
-            'tua-forma-options-section',           # $section
-            [
-                'label_for' => 'tua-forma-smtp-from',
-                'class' => 'regular-text',
-                'description' => null,
-            ]
-        );                
+        // register_setting(
+        //     'tua-forma-settings',  # $option_group,
+        //     'tua-forma-smtp-from', # $option_name,
+        //     null                   # $sanitize_callback
+        // );
+        // add_settings_field(
+        //     'tua-forma-smtp-from',                  # $id
+        //     'De:',                                  # $title
+        //     array($this,'tua_forma_text_callback'), # $callback
+        //     'tua-forma-settings',                   # $page
+        //     'tua-forma-options-section',           # $section
+        //     [
+        //         'label_for' => 'tua-forma-smtp-from',
+        //         'class' => 'regular-text',
+        //         'description' => null,
+        //     ]
+        // );
 
-        // TODO - Reply-To
-        register_setting(
-            'tua-forma-settings',  # $option_group,
-            'tua-forma-smtp-reply-to', # $option_name,
-            null                   # $sanitize_callback
-        );
-        add_settings_field(
-            'tua-forma-smtp-reply-to',            # $id
-            'Responder a:',                         # $title
-            array($this,'tua_forma_text_callback'), # $callback
-            'tua-forma-settings',                 # $page
-            'tua-forma-options-section',          # $section
-            [
-                'label_for' => 'tua-forma-smtp-reply-to',
-                'class' => 'regular-text',
-                'description' => null,
-            ]
-        );        
+        // // TODO - Reply-To
+        // register_setting(
+        //     'tua-forma-settings',  # $option_group,
+        //     'tua-forma-smtp-reply-to', # $option_name,
+        //     null                   # $sanitize_callback
+        // );
+        // add_settings_field(
+        //     'tua-forma-smtp-reply-to',            # $id
+        //     'Responder a:',                         # $title
+        //     array($this,'tua_forma_text_callback'), # $callback
+        //     'tua-forma-settings',                 # $page
+        //     'tua-forma-options-section',          # $section
+        //     [
+        //         'label_for' => 'tua-forma-smtp-reply-to',
+        //         'class' => 'regular-text',
+        //         'description' => null,
+        //     ]
+        // );
         
 
         /**** SMTP Recipients  ****/
