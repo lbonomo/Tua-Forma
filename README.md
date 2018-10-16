@@ -1,9 +1,11 @@
 # Tua Forma
 ![ico](https://github.com/lbonomo/Tua-Forma/raw/master/assets/icon.png)
 
-Un plugin pensado para diseñaodres que necesitan hacer fomularios plasmar formularios 
+Un plugin pensado para diseñadores que necesitan hacer formularios plasmar formularios 
 sin limitaciones, este plugin solo se encarga de enviar los datos recolectados en el formulario 
-por email. Siemtete libre de definir tus propios campos, estilos, etc
+por email. Siéntete libre de definir tus propios campos, estilos, etc
+
+No olvides nombrar cada campo del formulario y agregar el botón de envió.
 
 ## Screenshot
 ### Admin page
