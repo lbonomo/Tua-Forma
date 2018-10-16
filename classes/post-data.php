@@ -71,16 +71,16 @@ if ( $_POST ) {
         $wp_mail_return = wp_mail( $recipients, $subject, $body, $headers );
 
         if ( $wp_mail_return ) {
-            // wp_safe_redirect()
+            // wp_safe_redirect() / wp_redirect()
             $next = add_query_arg('tua-forma-message', 'successful', $data['next']);
-            header('Location: '.$next);
+            wp_redirect($next);
         } else {
             $next = add_query_arg('tua-forma-message', 'error', $data['next']);
-            header('Location: '.$next);
+            wp_redirect($next);
         }
     } else {
         $next = add_query_arg('tua-forma-message', 'error', $data['next']);
-        header('Location: '.$next);
+        wp_redirect($next);
     }
 } else {
     error_log("Nada por aquí!");
