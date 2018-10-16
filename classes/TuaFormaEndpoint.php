@@ -10,8 +10,13 @@ class TuaFormaEndpoint {
     }
 
     function register_endpoint() {
-        // add_rewrite_endpoint( 'send', EP_PERMALINK | EP_PAGES );
-        add_rewrite_endpoint( 'tua-forma-send', EP_ALL );
+        /*
+        wp --path=/var/www/vanguard.com.ar/wordpress rewrite flush
+        wp --path=/var/www/vanguard.com.ar/wordpress rewrite list
+
+        tua-forma-send(/(.*))?/?$ ->	index.php?&tua-forma-send=$matches[2]
+        */       
+        add_rewrite_endpoint( 'tua-forma-send', EP_ROOT );
     }
 
 
@@ -21,7 +26,6 @@ class TuaFormaEndpoint {
         if ( ! isset( $wp_query->query_vars['tua-forma-send'] ) ) {
             return;
         } else {
-            error_log($wp_query->query_vars['tua-forma-send']);
             include plugin_dir_path( __FILE__ ) . 'post-data.php';
         }      
         die;

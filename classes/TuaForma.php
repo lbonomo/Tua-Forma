@@ -13,7 +13,7 @@ class TuaForma {
     }
 
     static function tua_forma_activate() {
-        flush_rewrite_rules ();
+        flush_rewrite_rules();
     }
 
     static function tua_forma_deactivation() {

@@ -1,15 +1,12 @@
 <?php
 
-// namespace classes;
-
 class TuaFormaShortCode {
   
     function __construct() {
         add_shortcode('tua-forma',array($this,'add_shortcode'));
     }
 
-    function add_shortcode($attr, $form) {
-        
+    function add_shortcode($attr, $form) {     
        
         if ( isset($_GET['tua-forma-message'] ) ) {
             $message = $_GET['tua-forma-message'];
@@ -36,12 +33,23 @@ class TuaFormaShortCode {
     function form($form){
         // Muestro el formulario
         $nonce_rand = rand();
-        $action = 'tua-forma-send';
-        $body = "<form accept-charset='UTF-8' action='$action' autocomplete='off' enctype='multipart/form-data' method='POST'>";
-        $body .= "<input type='hidden' id='rand' name='rand' value='$nonce_rand'>";
-        $body .= wp_nonce_field( 'tua-forma-nonce-'.$nonce_rand );
+        // $form_id =  // TODO
+        $action = '/tua-forma-send'; // Ver TuaFormaEndpoint.php - add_rewrite_endpoint( 'tua-forma-send', EP_ALL );
+        $body  = "\n<form accept-charset='UTF-8' action='$action' autocomplete='off' enctype='multipart/form-data' method='POST'>\n";       
+        $body .= "<input type='hidden' id='rand' name='rand' value='$nonce_rand'>\n";
+        /*         
+        wp_nonce_field( $action, $name, $referer, $echo ); 
+        $action: (string) (optional) Action name. Should give the context to what is taking place. Optional but recommended. Default: -1
+        $name: (string) (optional) Nonce name. This is the name of the nonce hidden form field to be created. Once the form is submitted, 
+            you can access the generated nonce via $_POST[$name]. Default: '_wpnonce'
+        $referer: (boolean) (optional) Whether also the referer hidden form field should be created with the wp_referer_field() function.
+            Default: true
+        $echo: (boolean) (optional) Whether to display or return the nonce hidden form field, and also the referer hidden form field if
+            the $referer argument is set to true. Default: true
+        */
+        $body .= wp_nonce_field( 'tua-forma-nonce-'.$nonce_rand, 'tua-forma-nonce', true, false );
         $body .= $form;
-        $body .= '</form>';
+        $body .= "\n</form>\n";      
 
         return $body;
     }
@@ -62,31 +70,6 @@ class TuaFormaShortCode {
         return $body;  
     }
 
-    function send_email() {
-        $headers = array('Content-Type: text/html; charset=UTF-8');        
-        $from = get_option('tua-forma-smtp-from');
-        $reply_to = get_option('tua-forma-smtp-reply-to');
-        $recipients = explode(',',get_option('tua-forma-smtp-recipients'));
-        $subject = get_option('tua-forma-subject');
-       
-        $body = new TuaFormaBody();
-        $data = $_POST;
-        # Campos que no se envian
-        $hidden = ['rand', '_wpnonce', '_wp_http_referer'];
-        foreach ($hidden as $h) {
-            unset($data[$h]);
-        }
-         
-        $wp_mail_return = wp_mail( $recipients, $subject, $body->body($data), $headers );
 
-        if ( $wp_mail_return ) {
-            // wp_safe_redirect()
-            $next = add_query_arg('tua-forma-message','successful',$reference);
-            header('Location: '.$next);
-        } else {
-            $next = add_query_arg('tua-forma-message','error',$reference);
-            header('Location: '.$next);
-        }
-    }
 
 }
