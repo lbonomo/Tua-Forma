@@ -7,6 +7,11 @@ Siéntete libre de definir tus propios campos, estilos, etc
 
 No olvides nombrar cada campo del formulario y agregar el botón de envió.
 
+## Install
+
+
+https://wordpress.org/plugins/tua-forma/
+
 ## Screenshot
 ### Admin page
 ![screenshot-1](https://github.com/lbonomo/Tua-Forma/raw/master/assets/screenshot-1.png)

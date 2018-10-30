@@ -250,15 +250,6 @@ class TuaFormaAdmin {
         // require_once plugin_dir_path(__File__).'../templates/admin-options-page.php';
         if (current_user_can('manage_options')) {
 
-            /**** Verifico si esta preciente la clase Mail ****/
-            if ( get_option('tua-forma-smtp-enabled') != 'true') { 
-                echo '<div class="error settings-error notice is-dismissible">
-                <p><strong>Es necesario tener instalada la libreria NET SMTP</strong> (sudo apt install php-mail php-net-smtp php-auth-sasl php-net-socket)</strong></p>
-                <button type="button" class="notice-dismiss">
-                <span class="screen-reader-text">Descartar este aviso.</span></button></div>
-                ';
-            }           
-
             /**** UPDATED ****/
             if ( isset ( $_GET['settings-updated'] ) ) {
                 add_settings_error(
