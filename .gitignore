@@ -9,3 +9,4 @@ node_modules/
 *.zip
 toupload.sh
 notas.txt
+tosvn.sh

@@ -11,14 +11,22 @@ class TuaFormaAdmin {
 
     # Registro el Muenu
     function tua_forma_option_page() {
-        add_menu_page(
+        // add_menu_page(
+        //     'Tua Forma config',
+        //     'Tua Forma', # $menu_title
+        //     'manage_options',
+        //     'tua-forma-settings',
+        //     array( 'TuaFormaAdmin', 'tua_forma_options_page_display'), # $function,
+        //     'dashicons-forms', # $icon_url - Ver en https://developer.wordpress.org/resource/dashicons/
+        //     15 # $position
+        // );
+
+        add_options_page(
             'Tua Forma config',
-            'Tua Forma', # $menu_title
+            'Tua Forma', 
             'manage_options',
             'tua-forma-settings',
-            array( 'TuaFormaAdmin', 'tua_forma_options_page_display'), # $function,
-            'dashicons-forms', # $icon_url - Ver en https://developer.wordpress.org/resource/dashicons/
-            15 # $position
+            array( 'TuaFormaAdmin', 'tua_forma_options_page_display')
         );
 
     }
@@ -249,19 +257,7 @@ class TuaFormaAdmin {
 
         // require_once plugin_dir_path(__File__).'../templates/admin-options-page.php';
         if (current_user_can('manage_options')) {
-
-            /**** UPDATED ****/
-            if ( isset ( $_GET['settings-updated'] ) ) {
-                add_settings_error(
-                    'tua-forma-settings',
-                    'tua-forma-settings',
-                    'Los datos se actualizaron correctamente',
-                    'updated'
-                );
-
-            }
             settings_errors('tua-forma-settings');
-
             echo '<form action="options.php" method="post">';
             settings_fields('tua-forma-settings');
             do_settings_sections('tua-forma-settings');
