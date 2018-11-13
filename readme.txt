@@ -3,7 +3,7 @@ Contributors: lbonomo
 Tags: shortcode, forms, form, form creator
 Requires at least: 4.5
 Tested up to: 5.0
-Stable tag: 0.1.3
+Stable tag: 0.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,9 @@ See this link for more information https://developer.mozilla.org/es/docs/Web/HTM
 
 
 == Changelog ==
+
+= 0.1.4 =
+* Move settings to Menu Settings
 
 = 0.1.3 =
 * Tested on WordPress 5.0-beta2-43846
