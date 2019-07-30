@@ -9,13 +9,7 @@ class TuaFormaEndpoint {
         add_action( 'template_redirect', array($this, 'template'));
     }
 
-    function register_endpoint() {
-        /*
-        wp --path=/var/www/vanguard.com.ar/wordpress rewrite flush
-        wp --path=/var/www/vanguard.com.ar/wordpress rewrite list
-
-        tua-forma-send(/(.*))?/?$ ->	index.php?&tua-forma-send=$matches[2]
-        */       
+    function register_endpoint() {    
         add_rewrite_endpoint( 'tua-forma-send', EP_ROOT );
     }
 

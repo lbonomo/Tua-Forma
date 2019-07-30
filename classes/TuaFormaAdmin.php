@@ -5,8 +5,10 @@
 class TuaFormaAdmin {
 
     public function __construct() {
+
         add_action('admin_init', array($this, 'tua_forma_register_setting'));
         add_action('admin_menu', array($this, 'tua_forma_option_page'));
+
     }
 
     # Registro el Muenu
@@ -38,47 +40,6 @@ class TuaFormaAdmin {
             'Opciones de Tua Forma',
             array($this, 'tua_forma_section_callback'),
             'tua-forma-settings');
-
-        // Registro en la tabla y agrego el campo a la Seccion
-
-        // TODO - From
-        // register_setting(
-        //     'tua-forma-settings',  # $option_group,
-        //     'tua-forma-smtp-from', # $option_name,
-        //     null                   # $sanitize_callback
-        // );
-        // add_settings_field(
-        //     'tua-forma-smtp-from',                  # $id
-        //     'De:',                                  # $title
-        //     array($this,'tua_forma_text_callback'), # $callback
-        //     'tua-forma-settings',                   # $page
-        //     'tua-forma-options-section',           # $section
-        //     [
-        //         'label_for' => 'tua-forma-smtp-from',
-        //         'class' => 'regular-text',
-        //         'description' => null,
-        //     ]
-        // );
-
-        // // TODO - Reply-To
-        // register_setting(
-        //     'tua-forma-settings',  # $option_group,
-        //     'tua-forma-smtp-reply-to', # $option_name,
-        //     null                   # $sanitize_callback
-        // );
-        // add_settings_field(
-        //     'tua-forma-smtp-reply-to',            # $id
-        //     'Responder a:',                         # $title
-        //     array($this,'tua_forma_text_callback'), # $callback
-        //     'tua-forma-settings',                 # $page
-        //     'tua-forma-options-section',          # $section
-        //     [
-        //         'label_for' => 'tua-forma-smtp-reply-to',
-        //         'class' => 'regular-text',
-        //         'description' => null,
-        //     ]
-        // );
-        
 
         /**** SMTP Recipients  ****/
         register_setting('tua-forma-settings', 'tua-forma-smtp-recipients');
@@ -151,6 +112,21 @@ class TuaFormaAdmin {
             'tua-forma-options-section',
             [
                 'label_for' => 'tua-forma-subject',
+                'description' => null,
+                'class' => 'regular-text',
+            ]
+        );
+
+        /**** Campo para mitigar el spam ****/
+        register_setting('tua-forma-settings', 'tua-forma-honeypot');
+        add_settings_field(
+            'tua-forma-honeypot',
+            'Nombre del campo (honeypot):',
+            array($this,'tua_forma_text_callback'),
+            'tua-forma-settings',
+            'tua-forma-options-section',
+            [
+                'label_for' => 'tua-forma-honeypot',
                 'description' => null,
                 'class' => 'regular-text',
             ]
@@ -254,21 +230,29 @@ class TuaFormaAdmin {
 
     static function tua_forma_options_page_display() {
    
-
         // require_once plugin_dir_path(__File__).'../templates/admin-options-page.php';
         if (current_user_can('manage_options')) {
             settings_errors('tua-forma-settings');
             echo '<form action="options.php" method="post">';
             settings_fields('tua-forma-settings');
             do_settings_sections('tua-forma-settings');
+            
+            /**** Boton probar  ****/
+
+
             submit_button("Grabar");
             echo '</form>';
 
-            /**** Boton probar  ****/
-            // TODO
-            // 
-            // <a id="tua-forma-test" class="button-secondary">Enviar un correo electrónico de prueba</a>
-            // 
+            $action = '/tua-forma-send'; // Ver TuaFormaEndpoint.php - add_rewrite_endpoint( 'tua-forma-send', EP_ALL );
+            $nonce_rand = rand();
+            $body  = "\n<form accept-charset='UTF-8' action='$action' method='POST'>\n";
+            $body .= "<input type='hidden' id='rand' name='rand' value='$nonce_rand'>\n";
+            $body .= "<input type='hidden' id='test' name='test' value='Solo una prueba'>\n";
+            $body .= wp_nonce_field( 'tua-forma-nonce-'.$nonce_rand, 'tua-forma-nonce', true, false );
+            $body .= '<input type="submit" value="Enviar prueba"></input>'."\n";
+            $body .= '<span id="swpsmtp-spinner" class="spinner"></span>';
+            $body .= "\n</form>\n";
+            echo $body;
         }
     }
 }

@@ -2,8 +2,8 @@
 Contributors: lbonomo
 Tags: shortcode, forms, form, form creator
 Requires at least: 4.5
-Tested up to: 5.0
-Stable tag: 0.1.4
+Tested up to: 5.2.2
+Stable tag: 0.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,9 @@ See this link for more information https://developer.mozilla.org/es/docs/Web/HTM
 
 
 == Changelog ==
+
+= 0.1.5 =
+* Add honeypot field
 
 = 0.1.4 =
 * Move settings to Menu Settings

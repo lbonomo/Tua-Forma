@@ -26,17 +26,28 @@ class TuaFormaShortCode {
             
         } else {
             $body = $this::form($form);
+            
         }      
         return $body;
     }  
 
+    function HiddenField($field){
+      return "\n<script> document.getElementById('$field').style.display = 'none'</script>\n";
+    }
+
     function form($form){
         // Muestro el formulario
+        $HoneypotField = get_option('tua-forma-honeypot');
         $nonce_rand = rand();
         // $form_id =  // TODO
         $action = '/tua-forma-send'; // Ver TuaFormaEndpoint.php - add_rewrite_endpoint( 'tua-forma-send', EP_ALL );
         $body  = "\n<form accept-charset='UTF-8' action='$action' autocomplete='off' enctype='multipart/form-data' method='POST'>\n";       
         $body .= "<input type='hidden' id='rand' name='rand' value='$nonce_rand'>\n";
+        // Honeypot
+        if ( $HoneypotField != "" ) {            
+            $body .= "<input type='text' id='$HoneypotField' name='$HoneypotField' tabindex='-1' autocomplete='off'>\n";
+            $body .= "<label class='' for='$HoneypotField' id='$HoneypotField-label'>Value:</label>\n";
+        }
         /*         
         wp_nonce_field( $action, $name, $referer, $echo ); 
         $action: (string) (optional) Action name. Should give the context to what is taking place. Optional but recommended. Default: -1
@@ -49,7 +60,10 @@ class TuaFormaShortCode {
         */
         $body .= wp_nonce_field( 'tua-forma-nonce-'.$nonce_rand, 'tua-forma-nonce', true, false );
         $body .= $form;
-        $body .= "\n</form>\n";      
+        $body .= "\n</form>\n";
+        
+        $body .= $this::HiddenField($HoneypotField); /* Oculto el campo con JS*/
+        $body .= $this::HiddenField($HoneypotField.'-label'); /* Oculto el campo con JS*/
 
         return $body;
     }
