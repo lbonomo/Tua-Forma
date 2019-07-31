@@ -239,10 +239,11 @@ class TuaFormaAdmin {
             
             /**** Boton probar  ****/
 
-
+            # echo '<input type="submit" name="submit" id="submit" class="button button-primary" value="Grabar">';
             submit_button("Grabar");
             echo '</form>';
 
+            # Boton de prueba de envio
             $action = '/tua-forma-send'; // Ver TuaFormaEndpoint.php - add_rewrite_endpoint( 'tua-forma-send', EP_ALL );
             $nonce_rand = rand();
             $body  = "\n<form accept-charset='UTF-8' action='$action' method='POST'>\n";
@@ -251,8 +252,8 @@ class TuaFormaAdmin {
             $body .= wp_nonce_field( 'tua-forma-nonce-'.$nonce_rand, 'tua-forma-nonce', true, false );
             $body .= '<input type="submit" value="Enviar prueba"></input>'."\n";
             $body .= '<span id="swpsmtp-spinner" class="spinner"></span>';
-            $body .= "\n</form>\n";
-            echo $body;
+            $body .= "\n</form>\n";            
+            // echo $body;
         }
     }
 }

@@ -86,7 +86,7 @@ if ( $_POST ) {
         $recipients = explode(',',get_option('tua-forma-smtp-recipients'));
         
         if ( $data['honeypot'] ) { 
-            $subject = "[SPAM] - ".get_option('tua-forma-subject');
+            $subject = "<SPAM> - ".get_option('tua-forma-subject');
         } else {
             $subject = get_option('tua-forma-subject');
         }
