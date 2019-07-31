@@ -7,7 +7,7 @@
 * Author URI:      https://lucasbonomo.com
 * Text Domain:     tua-forma
 * Domain Path:     /languages
-* Version:         0.1.5
+* Version:         0.1.7
 *
 * @package         Tua_Forma
 */

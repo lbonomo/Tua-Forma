@@ -2,6 +2,23 @@
 
 class TuaFormaPost {
 
+   function getClientData() {
+      $info = '';
+
+      // foreach($_SERVER as $key => $value) {
+      //    $info .= $key.' = '.$value
+      // }
+
+      $info .= "HTTP_HOST = ".$_SERVER["HTTP_HOST"]."<br />";
+      $info .= "HTTP_USER_AGENT = ".$_SERVER["HTTP_USER_AGENT"]."<br />";
+      $info .= "HTTP_REFERER = ".$_SERVER["HTTP_REFERER"]."<br />";
+      $info .= "SERVER_ADDR = ".$_SERVER["SERVER_ADDR"]."<br />";
+      $info .= "REMOTE_ADDR = ".$_SERVER["REMOTE_ADDR"]."<br />";
+      $info .= "REQUEST_SCHEME = ".$_SERVER["REQUEST_SCHEME"]."<br />";
+      $info .= "REQUEST_METHOD = ".$_SERVER["REQUEST_METHOD"]."<br />";
+      return $info; 
+   }
+
     function validate_data($post_data) {
         $data = $post_data;      
 
@@ -67,6 +84,16 @@ class TuaFormaPost {
         }
         $html .= "</tbody></table>";
         $html .= "<br>";
+        
+
+        if (get_option('tua-forma-metadata') == 1) {
+            // var_dump($this->getClientData());
+            $html .= '<div style="font-size: 85%; font-family: Arial;">';
+            $html .= '<h4>Información adicional</h4>';
+            $html .= $this->getClientData();
+            $html .= '</div>';
+        }
+
         return $html;
     }
 }
