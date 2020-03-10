@@ -26,7 +26,7 @@ See this link for more information https://developer.mozilla.org/es/docs/Web/HTM
 
 == Changelog ==
 
-= 0.1.8 =
+= 0.1.9 =
 Tested in WordPress 5.5
 
 = 0.1.8 =
