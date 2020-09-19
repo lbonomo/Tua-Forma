@@ -1,33 +1,68 @@
 <?php
 /**
-* Plugin Name:     Tua Forma
-* Plugin URI:      https://lucasbonomo.com/wordpress/plugins/
-* Description:     Este shortcode solo se encarga de generar las etiquetas (<form> y </form>) y campos (nonce) necesarios para enviar el contenido de un formulario por mail.
-* Author:          Lucas Bonomo
-* Author URI:      https://lucasbonomo.com
-* Text Domain:     tua-forma
-* Domain Path:     /languages
-* Version:         0.1.11
-*
-* @package         Tua_Forma
-*/
+ * Main pluing file.
+ *
+ * @package Tua_Forma
+ * @version 1.0.0
+ */
 
-require_once "classes/TuaForma.php";
+/*
+ * Plugin Name:       Tua Forma
+ * Plugin URI:        https://lucasbonomo.com/wordpress/plugins/
+ * Description:       This shortcode just put the tags (\<form\> y \</form\>), somes nonce fields and send his content by email
+ * Author:            Lucas Bonomo
+ * Author URI:        https://lucasbonomo.com
+ * Text Domain:       tua-forma
+ * Domain Path:       /languages
+ * Version:           1.0.0
+ * Stable tag:        1.0.0
+ * Requires at least: 5.0
+ * Requires PHP:      7.0
+ * Tested up to:      5.5
+ * Author:            Lucas Bonomo
+ * Author URI:        https://lucasbonomo.com
+ * License:           GPL-2.0+
 
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+ */
 
-/**** Activator ****/
-register_activation_hook( __FILE__,  array( 'TuaForma', 'tua_forma_activate' ) );
+require_once 'classes/class-tuaforma.php';
 
-/**** Deactivator ****/
-register_deactivation_hook( __FILE__,  array( 'TuaForma', 'tua_forma_deactivation' ) );
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-/**** Uninstall ****/
-register_uninstall_hook( __FILE__,  array( 'TuaForma', 'tua_forma_uninstall' ) );
+// Activator.
+register_activation_hook(
+	__FILE__,
+	array(
+		'TuaForma',
+		'tua_forma_activate',
+	)
+);
 
+// Deactivator.
+register_deactivation_hook(
+	__FILE__,
+	array(
+		'TuaForma',
+		'tua_forma_deactivation',
+	)
+);
 
+// Uninstall.
+register_uninstall_hook(
+	__FILE__,
+	array(
+		'TuaForma',
+		'tua_forma_uninstall',
+	)
+);
+
+/**
+ * Main function
+ */
 function tua_forma_run() {
-    $plugin = new TuaForma();
+	$plugin = new TuaForma();
 }
 
 tua_forma_run();

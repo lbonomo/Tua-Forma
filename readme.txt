@@ -1,9 +1,10 @@
 === Tua Forma ===
 Contributors: lbonomo
 Tags: shortcode, forms, form, form creator
-Requires at least: 4.5
-Tested up to: 5.5
-Stable tag: 0.1.12
+Version: 1.0.0
+Stable tag: 1.0.0
+Requires at least: 5.0.0
+Tested up to: 5.5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +26,16 @@ See this link for more information https://developer.mozilla.org/es/docs/Web/HTM
 
 
 == Changelog ==
+
+= 1.0.0 =
+- I tested on WordPress 5.5.1
+- I improve documentation
+
+= 0.1.13 =
+- I adapted the project to WordPress coding standards
+- I added a nonce to the "GET" query
+- I improve the source documentation
+- I tested in WordPress 5.4.1
 
 = 0.1.12 =
 Some problems with GitHub Actions
