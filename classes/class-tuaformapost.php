@@ -137,8 +137,6 @@ class TuaFormaPost {
 // if POST.
 if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
 
-	error_log('por aca');
-
 	if ( isset( $_REQUEST['tua-forma-nonce'] ) ) {
 		$nonce = wp_unslash( $_REQUEST['tua-forma-nonce'] );
 	}
@@ -149,9 +147,6 @@ if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'
 		$tosend  = new TuaFormaPost();
 		$referer = $_REQUEST['_wp_http_referer'];
 		$data    = $tosend->validate_data( $_REQUEST );
-		// if ( isset( $_SERVER['HTTP_HOST'] ) ) {
-		// 	$info .= 'HTTP_HOST = ' . wp_unslash( $_SERVER['HTTP_HOST'] ) . '<br />';  // phpcs:ignore sanitization okay
-		// };
 
 		if ( isset( $data['error'] ) && ! $data['error'] ) {
 			$headers    = array( 'Content-Type: text/html; charset=UTF-8' );
@@ -179,7 +174,4 @@ if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'
 			wp_safe_redirect( $next );
 		}
 	}
-} else {
-error_log('no post');
-var_dump($_REQUEST);
-};
+}
