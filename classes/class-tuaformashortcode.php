@@ -25,14 +25,6 @@ class TuaFormaShortCode {
 	 */
 	public function add_shortcode( $attr, $form ) {
 
-// if(wp_verify_nonce($_REQUEST['name_of_your_nonce_field'], 'name_of_your_action')){
-//      } else {
-// }
-
-// Only show de shortcode in GET method (
-
-// if ( isset( $_REQUEST['REQUEST_METHOD'] ) && 'GET' === $_REQUEST['REQUEST_METHOD'] ) {}
-
 		if ( isset( $_GET['tua-forma-message'] ) ) {
 
 			// After form send (POST) redirected to the original URL with result and nonce.
