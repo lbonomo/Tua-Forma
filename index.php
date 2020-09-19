@@ -1,3 +1,10 @@
 <?php
-// Silence is golden.
-// echo "Nada por aqui!";
+/**
+ * Silence file.
+ *
+ * @package Simple Analytics
+ */
+
+/**
+ * Silence is golden.
+ */

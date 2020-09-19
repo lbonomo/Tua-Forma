@@ -1,17 +1,18 @@
 # Tua Forma
 ![ico](.wordpress-org/icon-128x128.png)
 
-Un plugin pensado para diseñadores que necesitan plasmar formularios sin limitaciones,
-este plugin solo se encarga de enviar los datos recolectados en el formulario por email.
-Siéntete libre de definir tus propios campos, estilos, etc
+This plugin just collect and send the fields in the form by email.
 
-No olvides nombrar cada campo del formulario y agregar el botón de envió.
+Feeling free to define your own fields, styles and etc into the HTML block.
 
-## Install
-https://wordpress.org/plugins/tua-forma/
+Don't forget to name each field on the form and add the submit button.
 
 ## Easy WP SMTP
-Puedes utilizar [Easy WP SMTP](https://es.wordpress.org/plugins/easy-wp-smtp/) para configuar un servidor SMTP
+You can use [Easy WP SMTP](https://es.wordpress.org/plugins/easy-wp-smtp/)  to configure SMTP server in WordPress
+
+### Successful and error message
+This messages can be modified from > Settings > Tua Forma > [Error message | Successful message]
+and the style with the CSS classes (`tua-forma-successful-message` | `tua-forma-error-message`)
 
 ## Screenshot
 ### Admin page
