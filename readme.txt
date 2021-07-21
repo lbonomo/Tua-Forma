@@ -1,10 +1,10 @@
 === Tua Forma ===
 Contributors: lbonomo
 Tags: shortcode, forms, form, form creator
-Version: 1.0.1
-Stable tag: 1.0.1
+Version: 1.1.0
+Stable tag: 1.1.0
 Requires at least: 5.0.0
-Tested up to: 5.7.0
+Tested up to: 5.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
