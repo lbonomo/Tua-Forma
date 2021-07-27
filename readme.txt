@@ -1,10 +1,10 @@
 === Tua Forma ===
 Contributors: lbonomo
 Tags: shortcode, forms, form, form creator
-Version: 1.1.0
-Stable tag: 1.1.0
+Version: 1.1.2
+Stable tag: 1.1.2
 Requires at least: 5.0.0
-Tested up to: 5.8
+Tested up to: 5.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,9 @@ See this link for more information https://developer.mozilla.org/es/docs/Web/HTM
 
 
 == Changelog ==
+
+= 1.1.2 =
+- I tested on WordPress 5.8.0
 
 = 1.0.1 =
 - I tested on WordPress 5.7.0
