@@ -3,7 +3,7 @@
  * Main pluing file.
  *
  * @package Tua_Forma
- * @version 1.1.3
+ * @version 1.1.4
  */
 
 /*
@@ -14,10 +14,10 @@
  * Author URI:        https://lucasbonomo.com
  * Text Domain:       tua-forma
  * Domain Path:       /languages
- * Version:           1.1.3
- * Stable tag:        1.1.3
- * Tested up to:      6.0.0
- * Requires at least: 5.0
+ * Version:           1.1.4
+ * Stable tag:        1.1.4
+ * Tested up to:      6.7.1
+ * Requires at least: 6.6
  * Requires PHP:      7.0
  * Author:            Lucas Bonomo
  * Author URI:        https://lucasbonomo.com

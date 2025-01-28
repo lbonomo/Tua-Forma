@@ -4,7 +4,7 @@ Tags: shortcode, forms, form, form creator
 Version: 1.1.3
 Stable tag: 1.1.3
 Requires at least: 5.0.0
-Tested up to: 6.0.0
+Tested up to: 6.7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,9 @@ See this link for more information https://developer.mozilla.org/es/docs/Web/HTM
 
 
 == Changelog ==
+
+= 1.1.4 =
+- I tested on WordPress 6.7.1
 
 = 1.1.3 =
 - I tested on WordPress 6.0.0
