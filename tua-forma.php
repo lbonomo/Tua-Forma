@@ -1,12 +1,13 @@
 <?php
 /**
- * Main pluing file.
+ * Tua Forma
  *
- * @package Tua_Forma
- * @version 1.1.4
- */
-
-/*
+ * @package     Tua Forma
+ * @author      Lucas Bonomo
+ * @copyright   2025 Lucas Bonomo
+ * @license     GPL-2.0-or-later
+ *
+ * @wordpress-plugin
  * Plugin Name:       Tua Forma
  * Plugin URI:        https://lucasbonomo.com/wordpress/plugins/
  * Description:       This shortcode just put the tags (&lt;form&gt; y &lt;/form&gt;), somes nonce fields and send his content by email
@@ -22,7 +23,6 @@
  * Author:            Lucas Bonomo
  * Author URI:        https://lucasbonomo.com
  * License:           GPL-2.0+
-
  */
 
 require_once 'classes/class-tuaforma.php';

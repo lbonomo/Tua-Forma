@@ -1,10 +1,12 @@
 === Tua Forma ===
 Contributors: lbonomo
 Tags: shortcode, forms, form, form creator
-Version: 1.1.3
-Stable tag: 1.1.3
-Requires at least: 5.0.0
+Donate link: https://lucasbonomo.com/donate
+Version: 1.1.4
+Stable tag: 1.1.4
 Tested up to: 6.7.1
+Requires at least: 5.0.0
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,9 +23,7 @@ See this link for more information https://developer.mozilla.org/es/docs/Web/HTM
 
 == Installation ==
 
-
 == Screenshots ==
-
 
 == Changelog ==
 
